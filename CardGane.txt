@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CardGame
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<int> player1 = Console.ReadLine()
+                .Split()
+                .Select(int.Parse)
+                .ToList();
+            List<int> player2 = Console.ReadLine()
+                .Split()
+                .Select(int.Parse)
+                .ToList();
+
+            while (player1.Count > 0 && player2.Count > 0)
+            {
+                for (int i = 0; i < Math.Min(player1.Count, player2.Count); i++)
+                {
+                    if (player2[i] == player1[i])
+                    {
+                        player1.RemoveAt(i);
+                        player2.RemoveAt(i);
+
+                    }
+                    else if (player1[i] > player2[i])
+                    {
+                        int num1 = player1[i];
+                        player1.RemoveAt(i);
+                        player1.Add(num1);
+                        player1.Add(player2[i]);
+                        player2.RemoveAt(i);
+                    }
+                    else
+                    {
+                        int num2 = player2[i];
+                        player2.RemoveAt(i);
+                        player2.Add(num2);
+                        player2.Add(player1[i]);
+                        player1.RemoveAt(i);
+                    }
+                    i = i -1;
+                }
+                if (player1.Count == 0 || player2.Count == 0)
+                {
+                    break;
+                }
+            }
+            if (player1.Count > 0)
+            {
+                Console.WriteLine($"First player wins! Sum: {player1.Sum()}");
+            }
+            else
+            {
+                Console.WriteLine($"Second player wins! Sum: {player2.Sum()}");
+            }
+        }
+    }
+}
